@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Question For You ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 600px;
+        }
+
+        .hearts-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.3;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-50px) rotate(180deg);
+            }
+        }
+
+        .question-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #c2185b;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .buttons-container {
+            position: relative;
+            height: 200px;
+            margin-top: 40px;
+        }
+
+        button {
+            font-size: 1.5em;
+            padding: 20px 50px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: 'Georgia', serif;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+            position: relative;
+            z-index: 2;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.6);
+        }
+
+        .no-btn {
+            background: linear-gradient(135deg, #a8a8a8 0%, #7f7f7f 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(127, 127, 127, 0.4);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .celebration {
+            display: none;
+            text-align: center;
+        }
+
+        .celebration.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .celebration h2 {
+            font-size: 3em;
+            color: #c2185b;
+            margin-bottom: 30px;
+        }
+
+        .celebration-gif {
+            width: 300px;
+            height: 300px;
+            border-radius: 20px;
+            margin: 20px auto;
+            object-fit: cover;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .love-message {
+            font-size: 1.5em;
+            color: #555;
+            margin-top: 30px;
+            line-height: 1.6;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f093fb;
+            position: absolute;
+            animation: confetti-fall 3s linear;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            button {
+                font-size: 1.2em;
+                padding: 15px 35px;
+            }
+
+            .question-box {
+                padding: 40px 25px;
+            }
+
+            .celebration h2 {
+                font-size: 2em;
+            }
+
+            .celebration-gif {
+                width: 250px;
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-background" id="heartsBackground"></div>
+    
+    <div class="container">
+        <div class="question-box" id="questionBox">
+            <h1>Will you be my forever? 💕</h1>
+            
+            <div class="buttons-container">
+                <button class="yes-btn" id="yesBtn">Yes! ❤️</button>
+                <button class="no-btn" id="noBtn">Not sure...</button>
+            </div>
+        </div>
+
+        <div class="celebration" id="celebration">
+            <div class="question-box">
+                <h2>I knew it! 💖</h2>
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDhkNzE4ZTRmZGE4Y2M2YzE2NzE4OWE3YTBhNjU4YWQwZjE4YzViYiZjdD1n/3o6Zt6ML6BklJENxAI/giphy.gif" 
+                     alt="Love celebration" 
+                     class="celebration-gif">
+                <p class="love-message">
+                    You've made me the happiest person alive! 
+                    <br>Forever and always, my love. 💑
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts background
+        const heartsBackground = document.getElementById('heartsBackground');
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = '❤️';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heartsBackground.appendChild(heart);
+        }
+
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const questionBox = document.getElementById('questionBox');
+        const celebration = document.getElementById('celebration');
+
+        // Function to move the "No" button to a random position
+        function moveNoButton() {
+            const container = document.querySelector('.buttons-container');
+            const containerRect = container.getBoundingClientRect();
+            
+            // Calculate random position within container
+            const maxX = containerRect.width - noBtn.offsetWidth - 20;
+            const maxY = containerRect.height - noBtn.offsetHeight - 20;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            noBtn.style.transform = 'none';
+        }
+
+        // Desktop: hover event
+        noBtn.addEventListener('mouseenter', moveNoButton);
+
+        // Mobile: touch start event (before tap registers)
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveNoButton();
+        });
+
+        // Create confetti effect
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.background = ['#f093fb', '#f5576c', '#4facfe', '#00f2fe', '#ffd89b'][Math.floor(Math.random() * 5)];
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        // Yes button click
+        yesBtn.addEventListener('click', () => {
+            questionBox.style.display = 'none';
+            celebration.classList.add('active');
+            createConfetti();
+        });
+
+        // Prevent accidental click on No button
+        noBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            moveNoButton();
+        });
+    </script>
+</body>
+</html>
